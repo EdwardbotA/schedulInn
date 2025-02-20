@@ -3,8 +3,13 @@ import BasePage from "./pages/BasePage";
 import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard";
 import { useAuth } from "./context/context";
+import { JSX } from "react";
 
-const PrivateRoute = ({ element }) => {
+interface IPrivateRoute {
+  element: JSX.Element;
+}
+
+const PrivateRoute = ({ element }: IPrivateRoute) => {
   const { user } = useAuth();
   return user ? element : <Navigate to="/" />;
 };
@@ -19,6 +24,7 @@ function AppRoutes() {
             path="dashboard"
             element={<PrivateRoute element={<Dashboard />} />}
           />
+          <Route path="*" element={<PrivateRoute element={<Dashboard />} />} />
         </Route>
       </Routes>
     </HashRouter>

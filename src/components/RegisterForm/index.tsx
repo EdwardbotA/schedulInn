@@ -7,10 +7,6 @@ import { fetchUser, registerUser } from "../../services/usersAPI/userAPI";
 import IUserData from "../../interface/IUserData";
 import { emailValidation } from "../../utils/emailValidation";
 
-interface RegisterFormProps {
-  user: string;
-}
-
 interface RegisterFormData {
   nombre: string;
   email: string;
@@ -18,7 +14,7 @@ interface RegisterFormData {
   tipo: string;
 }
 
-const RegisterForm: FC<RegisterFormProps> = ({ user }) => {
+const RegisterForm: FC = () => {
   const {
     register,
     handleSubmit,
@@ -29,7 +25,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ user }) => {
       nombre: "",
       email: "",
       password: "",
-      tipo: user,
+      tipo: "select",
     },
   });
 
@@ -58,10 +54,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ user }) => {
   return (
     <div className="w-full max-w-xl mx-auto p-4 border rounded-lg shadow-lg">
       <h2 className="text-xl font-bold mb-4">Registro</h2>
-      <p className="text-sm text-gray-500 mb-4">
-        Si ya tienes una cuenta, ingresa tu correo electrónico y contraseña para
-        iniciar sesión.
-      </p>
+
       <form
         onSubmit={handleSubmit(onSubmited)}
         className="flex flex-col space-y-3"
@@ -110,16 +103,22 @@ const RegisterForm: FC<RegisterFormProps> = ({ user }) => {
         )}
 
         <select
-          className="border p-2 rounded disabled:bg-gray-200"
-          disabled
-          {...register("tipo")}
+          defaultValue="select"
+          className={`border p-2 rounded ${
+            errors.email && "border-primary border-2"
+          }`}
+          {...register("tipo", {
+            validate: (val) =>
+              val !== "select" || "Debes seleccionar un tipo de cuenta",
+          })}
         >
-          {user === "agente" ? (
-            <option value={user}>Administrador</option>
-          ) : (
-            <option value={user}>Viajero</option>
-          )}
+          <option value="select" disabled>
+            Selecciona tu tipo de cuenta
+          </option>
+          <option value="agente">Administrador</option>
+          <option value="viajero">Viajero</option>
         </select>
+        {errors.tipo && <ErrorMessage>{errors.tipo.message}</ErrorMessage>}
 
         <Button handleClick={() => handleSubmit}>Registrarse</Button>
       </form>

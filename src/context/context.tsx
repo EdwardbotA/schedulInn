@@ -1,11 +1,4 @@
-import {
-  createContext,
-  FC,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, FC, ReactNode, useContext, useState } from "react";
 import { IGlobalContext } from "../interface/IGlobalContext";
 import IUserData from "../interface/IUserData";
 import { fetchUser } from "../services/usersAPI/userAPI";
@@ -17,20 +10,16 @@ interface GlobalContextProps {
 
 export const GlobalContext = createContext<IGlobalContext>({
   user: null,
-  login: () => {},
+  login: () => Promise.resolve(null),
   logout: () => {},
 });
 
 export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
-  const [user, setUser] = useState<IUserData | null>(null);
-
-  useEffect(() => {
+  const [user, setUser] = useState<IUserData | null>(() => {
     const storedUser = localStorage.getItem("user");
 
-    if (storedUser) {
-      login(JSON.parse(storedUser));
-    }
-  }, []);
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   const login = async (user: Login): Promise<IUserData | null> => {
     const userExists: IUserData[] = await fetchUser(user.email, user.tipo);
