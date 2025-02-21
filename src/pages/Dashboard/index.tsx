@@ -20,17 +20,19 @@ const Dashboard: FC = () => {
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <p className="text-xl">Hola {user!.nombre}</p>
         </div>
-        <div className="flex gap-2 items-center justify-center grow">
-          <Link to={`/dashboard/agregar-hotel`}>
-            <Button>Agregar Hotel</Button>
-          </Link>
-          <Link to={`/dashboard/reservas`}>
-            <Button>Ver Reservas</Button>
-          </Link>
-        </div>
       </div>
       {location.pathname === "/dashboard" && user!.tipo === "agente" && (
-        <AdminHotelList />
+        <>
+          <div className="flex gap-2 items-center justify-center grow">
+            <Link to={`/dashboard/agregar-hotel`}>
+              <Button>Agregar Hotel</Button>
+            </Link>
+            <Link to={`/dashboard/reservas`}>
+              <Button>Ver Reservas</Button>
+            </Link>
+          </div>
+          <AdminHotelList />
+        </>
       )}
       <Outlet />
     </section>
