@@ -4,6 +4,8 @@ interface IUserData {
   email: string;
   password: string;
   tipo: string;
+  hoteles?: string[];
+  reservas?: string[];
 }
 
 export default IUserData;
