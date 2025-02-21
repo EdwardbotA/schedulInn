@@ -42,6 +42,13 @@ const AdminHotelList: FC = () => {
                 <h2 className="text-lg font-bold">{hotel.nombre}</h2>
                 <p className="text-sm text-gray-600">{hotel.direccion}</p>
                 <p className="text-sm text-gray-600">Tel: {hotel.telefono}</p>
+                <p
+                  className={
+                    hotel.habilitado ? "text-green-600" : "text-red-600"
+                  }
+                >
+                  {hotel.habilitado ? "Disponible" : "No Disponible"}
+                </p>
               </div>
               {openHotel === hotel.id ? "🔺" : "🔻"}
             </div>

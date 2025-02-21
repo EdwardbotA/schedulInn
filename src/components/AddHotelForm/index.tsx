@@ -2,6 +2,9 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../Button";
 import ErrorMessage from "../ErrorMessage";
+import { useAuth } from "../../context/context";
+import { addHotel } from "../../services/hotelAPI/hotelsAdminAPI";
+import { useNavigate } from "react-router";
 
 interface AddHotelFormData {
   nombre: string;
@@ -11,6 +14,7 @@ interface AddHotelFormData {
 }
 
 const AddHotelForm: FC = () => {
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -24,10 +28,19 @@ const AddHotelForm: FC = () => {
       habilitado: false,
     },
   });
+  const navigate = useNavigate();
 
   const onSubmited = async (formData: AddHotelFormData) => {
     try {
-      console.log(formData);
+      const sendData = {
+        ...formData,
+        adminId: user!.id,
+        habitaciones: [],
+      };
+
+      await addHotel(sendData);
+
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error en el registro", error);
     }
@@ -35,7 +48,7 @@ const AddHotelForm: FC = () => {
 
   return (
     <div className="w-full max-w-xl mx-auto p-4 border rounded-lg shadow-lg">
-      <h2 className="text-xl font-bold mb-4">Añadir hotel</h2>
+      <h2 className="text-xl font-bold mb-4">Crear nuevo hotel</h2>
 
       <form
         onSubmit={handleSubmit(onSubmited)}
@@ -98,7 +111,7 @@ const AddHotelForm: FC = () => {
           />
         </label>
 
-        <Button>Registrarse</Button>
+        <Button>Añadir hotel</Button>
       </form>
     </div>
   );
