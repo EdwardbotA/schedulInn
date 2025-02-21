@@ -43,7 +43,12 @@ const RegisterForm: FC = () => {
         return;
       }
 
-      await registerUser(formData);
+      const sendData =
+        formData.tipo === "agente"
+          ? { ...formData, hoteles: [] }
+          : { ...formData, reservas: [] };
+
+      await registerUser(sendData);
 
       navigate("dashboard");
     } catch (error) {
