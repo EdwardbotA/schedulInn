@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import { useAuth } from "./context/context";
 import { JSX } from "react";
 import Reservations from "./pages/Reservation";
+import AddHotelForm from "./components/AddHotelForm";
 
 interface IPrivateRoute {
   element: JSX.Element;
@@ -25,10 +26,7 @@ function AppRoutes() {
             path="dashboard"
             element={<PrivateRoute element={<Dashboard />} />}
           >
-            <Route
-              path="agregar-hotel"
-              element={<h1>Agregar nuevo hotel</h1>}
-            />
+            <Route path="agregar-hotel" element={<AddHotelForm />} />
             <Route
               path="editar-hotel/:hotelId"
               element={<h1>Editar hotel</h1>}
