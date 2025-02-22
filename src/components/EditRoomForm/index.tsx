@@ -8,21 +8,16 @@ import {
   updateHotel,
 } from "../../services/hotelAPI/hotelsAdminAPI";
 import IHotelAdminData from "../../interface/IHotelAdminData";
+import { AddRoomFormData } from "../AddRoomForm";
 
-export interface AddRoomFormData {
-  tipo: string;
-  costoBase: number;
-  impuesto: number;
-  ubicacion: string;
-  habilitada: boolean;
-}
-
-const AddRoomForm: FC = () => {
-  const { hotelId } = useParams();
+const EditRoomForm: FC = () => {
+  const { hotelId, habitacionId } = useParams();
   const [hotel, setHotel] = useState<IHotelAdminData | null>(null);
+  const room = hotel?.habitaciones.find((h) => h.id === habitacionId);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<AddRoomFormData>({
     mode: "all",
@@ -40,16 +35,41 @@ const AddRoomForm: FC = () => {
     fetchHotel(hotelId).then((res) => setHotel(res));
   }, [hotelId]);
 
+  useEffect(() => {
+    if (room) {
+      setValue("tipo", room.tipo);
+      setValue("costoBase", room.costoBase);
+      setValue("impuesto", room.impuesto);
+      setValue("ubicacion", room.ubicacion);
+      setValue("habilitada", room.habilitada);
+    }
+  }, [setValue, room]);
+
   const onSubmited = async (formData: AddRoomFormData) => {
     try {
       if (hotel) {
-        const newRoom = [
-          ...hotel.habitaciones,
-          { ...formData, id: Date.now().toString() },
-        ];
+        const updatedRoom = hotel.habitaciones.map((h) =>
+          h.id === room?.id ? { ...formData, id: h.id } : h
+        );
 
         await updateHotel(hotelId!, {
-          habitaciones: newRoom,
+          habitaciones: updatedRoom,
+        });
+
+        navigate(`/dashboard/editar-hotel/${hotelId}`);
+      }
+    } catch (error) {
+      console.error("Error en el registro", error);
+    }
+  };
+
+  const onDeleted = async () => {
+    try {
+      if (hotel) {
+        const updatedRoom = hotel.habitaciones.filter((h) => h.id !== room?.id);
+
+        await updateHotel(hotelId!, {
+          habitaciones: updatedRoom,
         });
 
         navigate(`/dashboard/editar-hotel/${hotelId}`);
@@ -61,9 +81,10 @@ const AddRoomForm: FC = () => {
 
   return (
     <div className="w-full max-w-xl mx-auto p-4 border rounded-lg shadow-lg">
-      <h2 className="text-xl font-bold mb-4">
-        Crear habitación del hotel {hotel?.nombre}
-      </h2>
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-xl font-bold mb-4">Editar habitación</h2>
+        <Button handleClick={onDeleted}>Eliminar habitación</Button>
+      </div>
 
       <form
         onSubmit={handleSubmit(onSubmited)}
@@ -158,4 +179,4 @@ const AddRoomForm: FC = () => {
   );
 };
 
-export default AddRoomForm;
+export default EditRoomForm;

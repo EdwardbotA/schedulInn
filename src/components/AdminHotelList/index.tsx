@@ -92,7 +92,7 @@ const AdminHotelList: FC = () => {
                       </p>
                       {openHotelRoom === habitacion.id && (
                         <Link
-                          to={`/dashboard/editar-habitacion/${habitacion.id}`}
+                          to={`/dashboard/editar-habitacion/${hotel.id}/${habitacion.id}`}
                         >
                           <Button>Editar Habitación</Button>
                         </Link>
