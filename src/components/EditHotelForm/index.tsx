@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../Button";
 import ErrorMessage from "../ErrorMessage";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import {
   deleteHotel,
   fetchHotel,
@@ -73,7 +73,9 @@ const EditHotelForm: FC = () => {
     <div className="w-full max-w-xl mx-auto p-4 border rounded-lg shadow-lg">
       <div className="flex justify-between items-center mb-3">
         <Button handleClick={onDeleted}>Eliminar hotel</Button>
-        <Button>Añadir habitación</Button>
+        <Link to={`/dashboard/agregar-habitacion/${hotelId}`}>
+          <Button>Añadir habitación</Button>
+        </Link>
       </div>
       <h2 className="text-xl font-bold mb-4">Editar hotel</h2>
 
