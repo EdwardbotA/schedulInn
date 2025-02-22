@@ -4,7 +4,7 @@ interface IRoomData {
   costoBase: number;
   impuesto: number;
   ubicacion: string;
-  habilitado: boolean;
+  habilitada: boolean;
 }
 
 export default IRoomData;

@@ -7,7 +7,7 @@ interface IHotelAdminData {
   direccion: string;
   telefono: string;
   habilitado: boolean;
-  habitaciones: IRoomData[];
+  habitaciones: Partial<IRoomData>[];
 }
 
 export default IHotelAdminData;

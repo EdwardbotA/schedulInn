@@ -28,7 +28,7 @@ export const fetchHotel = async (hotelId: string | undefined) => {
 
 export const updateHotel = async (
   hotelId: string,
-  hotelData: Omit<IHotelAdminData, "id" | "adminId" | "habitaciones">
+  hotelData: Partial<IHotelAdminData>
 ) => {
   const { data } = await axios.patch(
     `http://localhost:3001/hotelesAdmin/${hotelId}`,
