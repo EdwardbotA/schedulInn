@@ -7,6 +7,7 @@ import { JSX } from "react";
 import Reservations from "./pages/Reservation";
 import AddHotelForm from "./components/AddHotelForm";
 import EditHotelForm from "./components/EditHotelForm";
+import AddRoomForm from "./components/AddRoomForm";
 
 interface IPrivateRoute {
   element: JSX.Element;
@@ -28,6 +29,10 @@ function AppRoutes() {
             element={<PrivateRoute element={<Dashboard />} />}
           >
             <Route path="agregar-hotel" element={<AddHotelForm />} />
+            <Route
+              path="agregar-habitacion/:hotelId"
+              element={<AddRoomForm />}
+            />
             <Route path="editar-hotel/:hotelId" element={<EditHotelForm />} />
             <Route
               path="editar-habitacion/:habitacionId"
