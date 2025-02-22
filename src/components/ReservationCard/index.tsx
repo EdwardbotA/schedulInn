@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "../../context/context";
 import { fetchHotelesAdmin } from "../../services/hotelAPI/hotelsAdminAPI";
 import Button from "../Button";
+import { Link } from "react-router";
 
 interface IReservationCardProps {
   reservation: IReservationData;
@@ -53,7 +54,9 @@ const ReservationCard: FC<IReservationCardProps> = ({ reservation }) => {
           }
         </p>
       </div>
-      <Button>Ver Detalles</Button>
+      <Link to={`/dashboard/reservas/${reservation.id}`}>
+        <Button>Ver Detalles</Button>
+      </Link>
     </article>
   );
 };
