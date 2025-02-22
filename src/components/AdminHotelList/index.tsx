@@ -9,7 +9,9 @@ import { Link } from "react-router";
 const AdminHotelList: FC = () => {
   const { user } = useAuth();
   const [openHotel, setOpenHotel] = useState<string | null>(null);
-  const [openHotelRoom, setOpenHotelRoom] = useState<string | null>(null);
+  const [openHotelRoom, setOpenHotelRoom] = useState<string | null | undefined>(
+    null
+  );
 
   const {
     data: hotels,
@@ -60,7 +62,7 @@ const AdminHotelList: FC = () => {
                   hotel.habitaciones.map((habitacion) => (
                     <div
                       key={habitacion.id}
-                      className="border p-2 rounded-md bg-gray-100"
+                      className="border p-2 rounded-md bg-gray-100 cursor-pointer"
                       onClick={() =>
                         setOpenHotelRoom(
                           openHotelRoom === habitacion.id ? null : habitacion.id
@@ -81,14 +83,12 @@ const AdminHotelList: FC = () => {
                       </p>
                       <p
                         className={
-                          !habitacion.habilitado
+                          habitacion.habilitada
                             ? "text-green-600"
                             : "text-red-600"
                         }
                       >
-                        {!habitacion.habilitado
-                          ? "Disponible"
-                          : "No Disponible"}
+                        {habitacion.habilitada ? "Disponible" : "No Disponible"}
                       </p>
                       {openHotelRoom === habitacion.id && (
                         <Link
