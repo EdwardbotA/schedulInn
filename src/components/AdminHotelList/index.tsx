@@ -76,7 +76,7 @@ const AdminHotelList: FC = () => {
                         <strong>Costo Base:</strong> ${habitacion.costoBase}
                       </p>
                       <p>
-                        <strong>Impuestos:</strong> ${habitacion.impuesto}
+                        <strong>Impuestos:</strong> {habitacion.impuesto}%
                       </p>
                       <p>
                         <strong>Ubicación:</strong> {habitacion.ubicacion}
