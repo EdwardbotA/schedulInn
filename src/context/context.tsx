@@ -12,6 +12,8 @@ import { fetchUser } from "../services/usersAPI/userAPI";
 import { Login } from "../components/LoginForm";
 import IReservationData from "../interface/IReservationData";
 import { fetchBooks } from "../services/BooksAPI/BooksAPI";
+import { fetchHabitaciones } from "../services/hotelAPI/hotelsAdminAPI";
+import IHotelAdminData from "../interface/IHotelAdminData";
 
 interface GlobalContextProps {
   children: ReactNode;
@@ -20,6 +22,7 @@ interface GlobalContextProps {
 export const GlobalContext = createContext<IGlobalContext>({
   user: null,
   reservations: [],
+  rooms: [],
   login: () => Promise.resolve(null),
   logout: () => {},
 });
@@ -31,25 +34,30 @@ export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
   const [reservations, setReservations] = useState<IReservationData[]>([]);
+  const [rooms, setRooms] = useState<IHotelAdminData[]>([]);
 
   useEffect(() => {
     if (!user) return;
 
     const fetchReservations = async () => {
-      const results = [
-        ...(await Promise.all(
-          user.hoteles!.map(async (hotelId) => {
-            const book = await fetchBooks(hotelId);
-            return book;
-          })
-        )),
-      ].flat();
-
-      setReservations(results);
+      if (user.hoteles) {
+        const results = [
+          ...(await Promise.all(
+            user.hoteles.map(async (hotelId) => {
+              const book = await fetchBooks(hotelId);
+              return book;
+            })
+          )),
+        ].flat();
+        setReservations(results);
+      } else if (user.reservas) {
+        const results = await fetchHabitaciones();
+        setRooms(results);
+      }
     };
 
     fetchReservations();
-  }, [user]);
+  }, [user, reservations]);
 
   const login = async (user: Login): Promise<IUserData | null> => {
     const userExists: IUserData[] = await fetchUser(user.email, user.tipo);
@@ -78,7 +86,9 @@ export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
   };
 
   return (
-    <GlobalContext.Provider value={{ user, logout, login, reservations }}>
+    <GlobalContext.Provider
+      value={{ user, logout, login, reservations, rooms }}
+    >
       {children}
     </GlobalContext.Provider>
   );
