@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { useParams } from "react-router";
 import { useAuth } from "../../context/context";
+import ReservationForm from "../../components/ReservationForm";
 
 const RoomDetails: FC = () => {
   const { hotelId, habitacionId } = useParams();
@@ -8,8 +9,6 @@ const RoomDetails: FC = () => {
 
   const hotel = rooms.find((hotel) => hotel.id === hotelId);
   const habitacion = hotel?.habitaciones.find((h) => h.id === habitacionId);
-
-  console.log(habitacion);
 
   return (
     <section className="flex flex-col gap-5 w-full">
@@ -52,6 +51,7 @@ const RoomDetails: FC = () => {
           </figure>
         </div>
       </div>
+      <ReservationForm />
     </section>
   );
 };
