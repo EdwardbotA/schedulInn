@@ -15,6 +15,7 @@ export interface AddRoomFormData {
   impuesto: number;
   ubicacion: string;
   habilitada: boolean;
+  imagen: string;
 }
 
 const AddRoomForm: FC = () => {
@@ -32,6 +33,7 @@ const AddRoomForm: FC = () => {
       impuesto: 0,
       ubicacion: "",
       habilitada: true,
+      imagen: "",
     },
   });
   const navigate = useNavigate();
@@ -143,8 +145,20 @@ const AddRoomForm: FC = () => {
           <ErrorMessage>{errors.ubicacion.message}</ErrorMessage>
         )}
 
+        <input
+          type="url"
+          placeholder="URL de la imagen de la habitación"
+          className={`border p-2 rounded ${
+            errors.imagen && "border-primary border-2"
+          }`}
+          {...register("imagen", {
+            required: "La imagen es obligatoria",
+          })}
+        />
+        {errors.imagen && <ErrorMessage>{errors.imagen.message}</ErrorMessage>}
+
         <label className="flex self-center items-center gap-3">
-          ¿Quieres habilitar el hotel?
+          ¿Quieres habilitar la habitación?
           <input
             type="checkbox"
             className={`border p-2 rounded`}

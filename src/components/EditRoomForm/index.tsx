@@ -27,6 +27,7 @@ const EditRoomForm: FC = () => {
       impuesto: 0,
       ubicacion: "",
       habilitada: true,
+      imagen: "",
     },
   });
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ const EditRoomForm: FC = () => {
       setValue("impuesto", room.impuesto);
       setValue("ubicacion", room.ubicacion);
       setValue("habilitada", room.habilitada);
+      setValue("imagen", room.imagen);
     }
   }, [setValue, room]);
 
@@ -149,6 +151,18 @@ const EditRoomForm: FC = () => {
             )}
           </label>
         </fieldset>
+
+        <input
+          type="url"
+          placeholder="URL de la imagen de la habitación"
+          className={`border p-2 rounded ${
+            errors.imagen && "border-primary border-2"
+          }`}
+          {...register("imagen", {
+            required: "La imagen es obligatoria",
+          })}
+        />
+        {errors.imagen && <ErrorMessage>{errors.imagen.message}</ErrorMessage>}
 
         <input
           type="text"

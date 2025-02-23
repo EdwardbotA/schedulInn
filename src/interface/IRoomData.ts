@@ -5,6 +5,7 @@ interface IRoomData {
   impuesto: number;
   ubicacion: string;
   habilitada: boolean;
+  imagen: string;
 }
 
 export default IRoomData;
