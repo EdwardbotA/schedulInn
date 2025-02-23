@@ -1,5 +1,24 @@
 import axios from "axios";
 import IHotelAdminData from "../../interface/IHotelAdminData";
+import IRoomData from "../../interface/IRoomData";
+
+export const fetchHabitaciones = async () => {
+  const { data } = await axios.get("http://localhost:3001/hotelesAdmin");
+
+  const rooms: IHotelAdminData[] = data
+    .filter((hotel: IHotelAdminData) => hotel.habilitado)
+    .map((hotel: IHotelAdminData) => {
+      return {
+        ...hotel,
+        habitaciones: hotel.habitaciones.filter(
+          (room: IRoomData) => room.habilitada
+        ),
+      };
+    })
+    .filter((hotel: IHotelAdminData) => hotel.habitaciones.length > 0);
+
+  return rooms;
+};
 
 export const fetchHotelesAdmin = async (adminId: string) => {
   const { data } = await axios.get(
