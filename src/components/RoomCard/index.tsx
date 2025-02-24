@@ -23,7 +23,7 @@ const RoomCard: FC<RoomCardProps> = ({ hotel, habitacion }) => {
           Habitacion {habitacion.tipo} - ${habitacion.costoBase} la noche
         </p>
         <p className="text-sm text-gray-500">
-          Ubicación: {habitacion.ubicacion}
+          Ubicación: {habitacion.ubicacion} - Para {habitacion.capacidad} personas
         </p>
       </div>
     </Link>

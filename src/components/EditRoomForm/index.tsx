@@ -25,6 +25,7 @@ const EditRoomForm: FC = () => {
       tipo: "select",
       costoBase: 0,
       impuesto: 0,
+      capacidad: 1,
       ubicacion: "",
       habilitada: true,
       imagen: "",
@@ -41,6 +42,7 @@ const EditRoomForm: FC = () => {
       setValue("tipo", room.tipo);
       setValue("costoBase", room.costoBase);
       setValue("impuesto", room.impuesto);
+      setValue("capacidad", room.capacidad);
       setValue("ubicacion", room.ubicacion);
       setValue("habilitada", room.habilitada);
       setValue("imagen", room.imagen);
@@ -115,6 +117,7 @@ const EditRoomForm: FC = () => {
             Costo base de la habitación
             <input
               type="number"
+              step={0.01}
               className={`w-full border p-2 rounded ${
                 errors.costoBase && "border-primary border-2"
               }`}
@@ -133,6 +136,7 @@ const EditRoomForm: FC = () => {
             Porcentaje de impuestos
             <input
               type="number"
+              step={0.01}
               className={`w-full border p-2 rounded ${
                 errors.impuesto && "border-primary border-2"
               }`}
@@ -148,6 +152,26 @@ const EditRoomForm: FC = () => {
             />
             {errors.impuesto && (
               <ErrorMessage>{errors.impuesto.message}</ErrorMessage>
+            )}
+          </label>
+
+          <label className="flex flex-col w-1/2">
+            Capacidad maxima de personas
+            <input
+              type="number"
+              className={`w-full border p-2 rounded ${
+                errors.capacidad && "border-primary border-2"
+              }`}
+              {...register("capacidad", {
+                required: "La capacidad es obligatorio",
+                min: {
+                  value: 1,
+                  message: "La capacidad debe ser 1 o mayor",
+                },
+              })}
+            />
+            {errors.capacidad && (
+              <ErrorMessage>{errors.capacidad.message}</ErrorMessage>
             )}
           </label>
         </fieldset>
@@ -179,7 +203,7 @@ const EditRoomForm: FC = () => {
         )}
 
         <label className="flex self-center items-center gap-3">
-          ¿Quieres habilitar el hotel?
+          ¿Quieres habilitar la habitación?
           <input
             type="checkbox"
             className={`border p-2 rounded`}

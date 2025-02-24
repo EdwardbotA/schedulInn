@@ -73,6 +73,10 @@ const AdminHotelList: FC = () => {
                         <strong>Tipo:</strong> {habitacion.tipo}
                       </p>
                       <p>
+                        <strong>Capacidad maxima:</strong>{" "}
+                        {habitacion.capacidad} personas
+                      </p>
+                      <p>
                         <strong>Costo Base:</strong> ${habitacion.costoBase}
                       </p>
                       <p>

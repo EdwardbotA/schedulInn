@@ -33,6 +33,10 @@ const RoomDetails: FC = () => {
               <strong>Tipo:</strong> {habitacion?.tipo}
             </p>
             <p>
+              <strong>Capacidad Maxima:</strong> {habitacion?.capacidad}{" "}
+              personas
+            </p>
+            <p>
               <strong>Ubicación:</strong> {habitacion?.ubicacion}
             </p>
             <p>
@@ -51,7 +55,7 @@ const RoomDetails: FC = () => {
           </figure>
         </div>
       </div>
-      <ReservationForm />
+      <ReservationForm cantidad={habitacion?.capacidad} />
     </section>
   );
 };

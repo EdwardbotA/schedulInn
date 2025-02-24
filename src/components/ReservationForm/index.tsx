@@ -19,7 +19,11 @@ interface ReservationFormData {
   huespedes: IGuestData[];
 }
 
-const ReservationForm: FC = () => {
+interface ReservationFromProps {
+  cantidad: number | undefined;
+}
+
+const ReservationForm: FC<ReservationFromProps> = ({ cantidad }) => {
   const { user, setReservations } = useAuth();
   const { hotelId, habitacionId } = useParams();
   const {
@@ -328,22 +332,24 @@ const ReservationForm: FC = () => {
               </Button>
             </div>
           ))}
-          <Button
-            type="button"
-            handleClick={() =>
-              append({
-                nombre: "",
-                fechaNacimiento: new Date(),
-                genero: "select",
-                tipoDocumento: "select",
-                numeroDocumento: "",
-                email: "",
-                telefono: "",
-              })
-            }
-          >
-            + Agregar Huésped
-          </Button>
+          {fields.length < cantidad! && (
+            <Button
+              type="button"
+              handleClick={() =>
+                append({
+                  nombre: "",
+                  fechaNacimiento: new Date(),
+                  genero: "select",
+                  tipoDocumento: "select",
+                  numeroDocumento: "",
+                  email: "",
+                  telefono: "",
+                })
+              }
+            >
+              + Agregar Huésped
+            </Button>
+          )}
         </div>
 
         <Button>Reservar habitación</Button>
