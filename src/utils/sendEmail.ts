@@ -20,7 +20,7 @@ export const sendConfirmationEmail = async (
   try {
     await emailjs.send(SERVICE_ID, TEMPLATE_ID, data, PUBLIC_KEY);
 
-    console.log("correo enviado con exito");
+    console.log(`correo enviado con exito a ${email}`);
   } catch (error) {
     console.error("error al enviar correo", error);
   }

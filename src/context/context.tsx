@@ -29,6 +29,7 @@ export const GlobalContext = createContext<IGlobalContext>({
   login: () => Promise.resolve(null),
   logout: () => {},
   setReservations: () => {},
+  setRooms: () => {},
 });
 
 export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
@@ -98,7 +99,15 @@ export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
 
   return (
     <GlobalContext.Provider
-      value={{ user, logout, login, reservations, rooms, setReservations }}
+      value={{
+        user,
+        logout,
+        login,
+        reservations,
+        rooms,
+        setReservations,
+        setRooms,
+      }}
     >
       {children}
     </GlobalContext.Provider>

@@ -1,0 +1,186 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "Juan Pérez",
+      "email": "juanperez@example.com",
+      "tipo": "agente",
+      "password": "12345678",
+      "hoteles": ["1", "2", "3"]
+    },
+    {
+      "id": "2",
+      "nombre": "María Gómez",
+      "email": "mariagomez@example.com",
+      "tipo": "agente",
+      "password": "87654321",
+      "hoteles": ["4"]
+    },
+    {
+      "id": "3",
+      "nombre": "Carlos López",
+      "email": "carloslopez@example.com",
+      "tipo": "viajero",
+      "password": "abcdefgh",
+      "reservas": ["1"]
+    }
+  ],
+  "hotelesAdmin": [
+    {
+      "id": "1",
+      "adminId": "1",
+      "nombre": "Hotel Paraíso",
+      "direccion": "Calle 123, Ciudad X",
+      "telefono": "123456789",
+      "habilitado": true,
+      "habitaciones": [
+        {
+          "tipo": "Doble",
+          "costoBase": "120.36",
+          "impuesto": "21.96",
+          "capacidad": 2,
+          "ubicacion": "Piso 1",
+          "habilitada": true,
+          "imagen": "https://hotelolgalucia.com/wp-content/uploads/2024/11/Habitacion-sencilla-hotelolgalucia.jpg",
+          "id": "101"
+        },
+        {
+          "tipo": "Doble",
+          "costoBase": "120.36",
+          "impuesto": "21.96",
+          "capacidad": 2,
+          "ubicacion": "Piso 1",
+          "habilitada": true,
+          "imagen": "https://hotelolgalucia.com/wp-content/uploads/2024/11/Habitacion-sencilla-hotelolgalucia.jpg",
+          "id": "101"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "adminId": "1",
+      "nombre": "Hotel Montaña",
+      "direccion": "Avenida 789, Ciudad Z",
+      "telefono": "555777999",
+      "habilitado": true,
+      "habitaciones": [
+        {
+          "id": "101",
+          "tipo": "Simple",
+          "costoBase": 120,
+          "impuesto": 21.6,
+          "capacidad": 5,
+          "ubicacion": "Piso 1",
+          "habilitada": true,
+          "imagen": "https://hotelolgalucia.com/wp-content/uploads/2024/11/Habitacion-sencilla-hotelolgalucia.jpg"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "adminId": "1",
+      "nombre": "Hotel Sol y Mar (Admin 1)",
+      "direccion": "Avenida 456, Ciudad Y",
+      "telefono": "987654321",
+      "habilitado": false,
+      "habitaciones": []
+    },
+    {
+      "id": "4",
+      "adminId": "2",
+      "nombre": "Hotel Sol y Mar (Admin 2)",
+      "direccion": "Avenida 456, Ciudad Y",
+      "telefono": "987654321",
+      "habilitado": true,
+      "habitaciones": [
+        {
+          "id": "101",
+          "tipo": "Simple",
+          "costoBase": 120,
+          "impuesto": 21.6,
+          "capacidad": 1,
+          "ubicacion": "Piso 1",
+          "habilitada": true,
+          "imagen": "https://hotelolgalucia.com/wp-content/uploads/2024/11/Habitacion-sencilla-hotelolgalucia.jpg"
+        }
+      ]
+    },
+    {
+      "id": "61a1",
+      "nombre": "Las palmas del sol",
+      "direccion": "calle 34 joder lejos",
+      "telefono": "78965452",
+      "habilitado": true,
+      "adminId": "1",
+      "habitaciones": [
+        {
+          "tipo": "King",
+          "costoBase": "1596",
+          "impuesto": "15",
+          "capacidad": 5,
+          "ubicacion": "piso 34",
+          "habilitada": false,
+          "id": "1740275734257",
+          "imagen": "https://hotelolgalucia.com/wp-content/uploads/2024/11/Habitacion-sencilla-hotelolgalucia.jpg"
+        }
+      ]
+    }
+  ],
+  "reservas": [
+    {
+      "id": "1",
+      "usuarioId": "3",
+      "hotelId": "1",
+      "habitacionId": "101",
+      "fechaEntrada": "2024-08-25",
+      "fechaSalida": "2024-08-30",
+      "huespedes": [
+        {
+          "nombre": "Carlos López",
+          "fechaNacimiento": "1990-05-10",
+          "genero": "Masculino",
+          "tipoDocumento": "CC",
+          "numeroDocumento": "12345678",
+          "email": "carloslopez@example.com",
+          "telefono": "111222333"
+        },
+        {
+          "nombre": "Carlos López",
+          "fechaNacimiento": "1990-05-10",
+          "genero": "Masculino",
+          "tipoDocumento": "CC",
+          "numeroDocumento": "12345678",
+          "email": "carloslopez@example.com",
+          "telefono": "111222333"
+        }
+      ],
+      "contactoEmergencia": {
+        "nombre": "Ana López",
+        "telefono": "999888777"
+      }
+    },
+    {
+      "id": "2",
+      "usuarioId": "3",
+      "hotelId": "2",
+      "habitacionId": "101",
+      "fechaEntrada": "2024-08-25",
+      "fechaSalida": "2024-08-30",
+      "huespedes": [
+        {
+          "nombre": "Carlos López",
+          "fechaNacimiento": "1990-05-10",
+          "genero": "Masculino",
+          "tipoDocumento": "CC",
+          "numeroDocumento": "12345678",
+          "email": "carloslopez@example.com",
+          "telefono": "111222333"
+        }
+      ],
+      "contactoEmergencia": {
+        "nombre": "Ana López",
+        "telefono": "999888777"
+      }
+    }
+  ]
+}

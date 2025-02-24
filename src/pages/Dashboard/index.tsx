@@ -4,6 +4,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import AdminHotelList from "../../components/AdminHotelList";
 import Button from "../../components/Button";
 import RoomCard from "../../components/RoomCard";
+import Search from "../../components/Search";
 
 const Dashboard: FC = () => {
   const { user, rooms } = useAuth();
@@ -42,13 +43,20 @@ const Dashboard: FC = () => {
               <Button>Ver Mis Reservas</Button>
             </Link>
           </div>
+          <Search />
           <div className="flex flex-col gap-4">
             <h2 className="text-lg font-bold">Habitaciones</h2>
             <div className="flex flex-wrap gap-4 justify-center">
-              {rooms.map((room) =>
-                room.habitaciones.map((bed) => (
-                  <RoomCard key={bed.id} hotel={room} habitacion={bed} />
-                ))
+              {rooms.length > 0 ? (
+                rooms.map((room) =>
+                  room.habitaciones.map((bed) => (
+                    <RoomCard key={bed.id} hotel={room} habitacion={bed} />
+                  ))
+                )
+              ) : (
+                <p className="text-center italic font-semibold">
+                  No hay habitaciones disponibles
+                </p>
               )}
             </div>
           </div>
