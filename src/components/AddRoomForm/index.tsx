@@ -84,8 +84,8 @@ const AddRoomForm: FC = () => {
           <option value="select" disabled>
             Seleccione el tipo de habitación
           </option>
-          <option value="simple">habitación Simple</option>
-          <option value="doble">habitación Doble</option>
+          <option value="Simple">habitación Simple</option>
+          <option value="Doble">habitación Doble</option>
           <option value="Queen">habitación Queen</option>
           <option value="King">habitación King</option>
         </select>
