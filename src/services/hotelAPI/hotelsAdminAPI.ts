@@ -20,7 +20,7 @@ export const fetchHabitaciones = async () => {
   return rooms;
 };
 
-export const fetchHotelesAdmin = async (adminId: string) => {
+export const fetchHotelesAdmin = async (adminId: string = "") => {
   const { data } = await axios.get(
     `http://localhost:3001/hotelesAdmin?adminId=${adminId}`
   );

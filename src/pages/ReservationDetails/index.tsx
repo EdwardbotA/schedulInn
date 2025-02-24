@@ -17,7 +17,10 @@ const ReservationDetails: FC = () => {
     error,
   } = useQuery<IHotelAdminData[]>({
     queryKey: ["hotelsAdmin", user!.id],
-    queryFn: () => fetchHotelesAdmin(user!.id),
+    queryFn: () =>
+      user?.tipo === "agente"
+        ? fetchHotelesAdmin(user!.id)
+        : fetchHotelesAdmin(),
     enabled: !!user?.id,
   });
 
@@ -40,6 +43,15 @@ const ReservationDetails: FC = () => {
         Nombre del hotel:{" "}
         <span className="font-medium">
           {hotels?.find((hotel) => hotel.id === reservation?.hotelId)?.nombre}
+        </span>
+      </p>
+      <p className="text-gray-600">
+        Direccion del hotel:{" "}
+        <span className="font-medium">
+          {
+            hotels?.find((hotel) => hotel.id === reservation?.hotelId)
+              ?.direccion
+          }
         </span>
       </p>
       <p className="text-gray-600">

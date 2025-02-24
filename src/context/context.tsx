@@ -11,7 +11,10 @@ import IUserData from "../interface/IUserData";
 import { fetchUser } from "../services/usersAPI/userAPI";
 import { Login } from "../components/LoginForm";
 import IReservationData from "../interface/IReservationData";
-import { fetchBooks } from "../services/BooksAPI/BooksAPI";
+import {
+  fetchBooksAdmin,
+  fetchBooksGuest,
+} from "../services/BooksAPI/BooksAPI";
 import { fetchHabitaciones } from "../services/hotelAPI/hotelsAdminAPI";
 import IHotelAdminData from "../interface/IHotelAdminData";
 
@@ -25,6 +28,7 @@ export const GlobalContext = createContext<IGlobalContext>({
   rooms: [],
   login: () => Promise.resolve(null),
   logout: () => {},
+  setReservations: () => {},
 });
 
 export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
@@ -44,7 +48,7 @@ export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
         const results = [
           ...(await Promise.all(
             user.hoteles.map(async (hotelId) => {
-              const book = await fetchBooks(hotelId);
+              const book = await fetchBooksAdmin(hotelId);
               return book;
             })
           )),
@@ -52,12 +56,19 @@ export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
         setReservations(results);
       } else if (user.reservas) {
         const results = await fetchHabitaciones();
-        setRooms(results);
+        const books = await fetchBooksGuest(user.id);
+
+        setRooms((prev) =>
+          JSON.stringify(prev) !== JSON.stringify(results) ? results : prev
+        );
+        setReservations((prev) =>
+          JSON.stringify(prev) !== JSON.stringify(books) ? books : prev
+        );
       }
     };
 
     fetchReservations();
-  }, [user, reservations]);
+  }, [user]);
 
   const login = async (user: Login): Promise<IUserData | null> => {
     const userExists: IUserData[] = await fetchUser(user.email, user.tipo);
@@ -87,7 +98,7 @@ export const GlobalProvider: FC<GlobalContextProps> = ({ children }) => {
 
   return (
     <GlobalContext.Provider
-      value={{ user, logout, login, reservations, rooms }}
+      value={{ user, logout, login, reservations, rooms, setReservations }}
     >
       {children}
     </GlobalContext.Provider>

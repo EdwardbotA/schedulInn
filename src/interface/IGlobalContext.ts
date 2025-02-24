@@ -9,4 +9,5 @@ export interface IGlobalContext {
   rooms: IHotelAdminData[] | [];
   login: (user: Login) => Promise<IUserData | null>;
   logout: () => void;
+  setReservations: (reservations: IReservationData[] | []) => void;
 }

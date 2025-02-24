@@ -5,7 +5,10 @@ import ErrorMessage from "../ErrorMessage";
 import { useAuth } from "../../context/context";
 import { IGuestData } from "../../interface/IGuestData";
 import { emailValidation } from "../../utils/emailValidation";
-import { addReservation } from "../../services/BooksAPI/BooksAPI";
+import {
+  addReservation,
+  fetchBooksGuest,
+} from "../../services/BooksAPI/BooksAPI";
 import { useNavigate, useParams } from "react-router";
 
 interface ReservationFormData {
@@ -17,7 +20,7 @@ interface ReservationFormData {
 }
 
 const ReservationForm: FC = () => {
-  const { user } = useAuth();
+  const { user, setReservations } = useAuth();
   const { hotelId, habitacionId } = useParams();
   const {
     register,
@@ -67,9 +70,12 @@ const ReservationForm: FC = () => {
           },
         };
 
-        await addReservation(sendData);
+        await addReservation(sendData, user);
 
-        navigate("/reservas");
+        const updatedBooks = await fetchBooksGuest(user.id);
+        setReservations(updatedBooks);
+
+        navigate("/dashboard/reservas");
       }
     } catch (error) {
       console.error("Error en el registro", error);

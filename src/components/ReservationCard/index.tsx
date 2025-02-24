@@ -15,7 +15,10 @@ const ReservationCard: FC<IReservationCardProps> = ({ reservation }) => {
   const { user } = useAuth();
   const { data: hotels } = useQuery<IHotelAdminData[]>({
     queryKey: ["hotelsAdmin", user!.id],
-    queryFn: () => fetchHotelesAdmin(user!.id),
+    queryFn: () =>
+      user?.tipo === "agente"
+        ? fetchHotelesAdmin(user!.id)
+        : fetchHotelesAdmin(),
     enabled: !!user?.id,
   });
 
