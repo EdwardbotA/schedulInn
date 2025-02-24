@@ -11,6 +11,7 @@ import AddRoomForm from "./components/AddRoomForm";
 import EditRoomForm from "./components/EditRoomForm";
 import ReservationDetails from "./pages/ReservationDetails";
 import RoomDetails from "./pages/RoomDetails";
+import ScrollTop from "./components/ScrollTop";
 
 interface IPrivateRoute {
   element: JSX.Element;
@@ -24,6 +25,7 @@ const PrivateRoute = ({ element }: IPrivateRoute) => {
 function AppRoutes() {
   return (
     <HashRouter>
+      <ScrollTop />
       <Routes>
         <Route path="/" element={<BasePage />}>
           <Route index element={<HomePage />} />
