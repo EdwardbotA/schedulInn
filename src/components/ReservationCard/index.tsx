@@ -36,7 +36,10 @@ const ReservationCard: FC<IReservationCardProps> = ({ reservation }) => {
   return (
     <article className="flex flex-col shadow-lg rounded-lg p-6 border gap-5">
       <h2 className="text-xl font-semibold text-gray-800">
-        Reserva #{reservation.id} hotel:{" "}
+        Reserva referencia: {reservation.id}
+      </h2>
+      <h2 className="text-xl font-semibold text-gray-800">
+        Hotel:{" "}
         {hotels?.find((hotel) => hotel.id === reservation.hotelId)?.nombre}
       </h2>
       <div className="mt-2 text-gray-600">

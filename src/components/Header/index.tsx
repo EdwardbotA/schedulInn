@@ -9,7 +9,7 @@ const Header: FC = () => {
   const location = useLocation();
 
   return (
-    <header className="flex w-full justify-between">
+    <header className="flex w-full justify-between max-w-5xl self-center">
       <Link to={`${user ? "/dashboard" : "/"}`}>
         <img
           src={schedulInnLogo}
