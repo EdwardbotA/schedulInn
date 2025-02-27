@@ -46,6 +46,7 @@ export const addReservation = async (
   const hotel = await fetchHotel(reservationData.hotelId);
 
   await sendConfirmationEmail(user.email, {
+    email: user.email,
     from_name: "SchedulInn",
     nombre: user.nombre,
     hotel: hotel!.nombre,
