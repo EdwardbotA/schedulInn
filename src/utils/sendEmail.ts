@@ -5,6 +5,7 @@ const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
 const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
 
 interface IEmailData {
+  email: string;
   from_name: string;
   nombre: string;
   hotel: string;
