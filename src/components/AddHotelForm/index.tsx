@@ -99,8 +99,8 @@ const AddHotelForm: FC = () => {
           {...register("ciudad", {
             required: "La ciudad es obligatoria",
             minLength: {
-              value: 8,
-              message: "La ciudad debe tener al menos 8 caracteres",
+              value: 3,
+              message: "La ciudad debe tener al menos 3 caracteres",
             },
           })}
         />

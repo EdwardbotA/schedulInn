@@ -13,6 +13,7 @@ import IHotelAdminData from "../../interface/IHotelAdminData";
 interface EditHotelFormData {
   nombre: string;
   direccion: string;
+  ciudad: string;
   telefono: string;
   habilitado: boolean;
 }
@@ -30,6 +31,7 @@ const EditHotelForm: FC = () => {
     defaultValues: {
       nombre: "",
       direccion: "",
+      ciudad: "",
       telefono: "",
       habilitado: false,
     },
@@ -44,6 +46,7 @@ const EditHotelForm: FC = () => {
     if (hotel) {
       setValue("nombre", hotel.nombre);
       setValue("direccion", hotel.direccion);
+      setValue("ciudad", hotel.ciudad);
       setValue("telefono", hotel.telefono);
       setValue("habilitado", hotel.habilitado);
     }
@@ -116,6 +119,22 @@ const EditHotelForm: FC = () => {
         {errors.direccion && (
           <ErrorMessage>{errors.direccion.message}</ErrorMessage>
         )}
+
+        <input
+          type="text"
+          placeholder="Ciudad del hotel"
+          className={`border p-2 rounded ${
+            errors.ciudad && "border-primary border-2"
+          }`}
+          {...register("ciudad", {
+            required: "La ciudad es obligatoria",
+            minLength: {
+              value: 3,
+              message: "La ciudad debe tener al menos 3 caracteres",
+            },
+          })}
+        />
+        {errors.ciudad && <ErrorMessage>{errors.ciudad.message}</ErrorMessage>}
 
         <input
           type="text"
