@@ -55,6 +55,12 @@ const ReservationDetails: FC = () => {
         </span>
       </p>
       <p className="text-gray-600">
+        Ciudad del hotel:{" "}
+        <span className="font-medium">
+          {hotels?.find((hotel) => hotel.id === reservation?.hotelId)?.ciudad}
+        </span>
+      </p>
+      <p className="text-gray-600">
         Habitación:{" "}
         <span className="font-medium">{reservation?.habitacionId}</span>
       </p>
