@@ -18,12 +18,15 @@ const RoomCard: FC<RoomCardProps> = ({ hotel, habitacion }) => {
           className="rounded-t-xl object-cover"
         />
 
-        <h2 className="text-xl font-bold">{hotel.nombre}</h2>
+        <h2 className="text-xl font-bold">
+          {hotel.nombre} - {hotel.ciudad}
+        </h2>
         <p className="text-gray-600">
           Habitacion {habitacion.tipo} - ${habitacion.costoBase} la noche
         </p>
         <p className="text-sm text-gray-500">
-          Ubicación: {habitacion.ubicacion} - Para {habitacion.capacidad} personas
+          Ubicación: {habitacion.ubicacion} - Para {habitacion.capacidad}{" "}
+          personas
         </p>
       </div>
     </Link>
