@@ -19,6 +19,9 @@ const RoomDetails: FC = () => {
             <strong>Dirección:</strong> {hotel?.direccion}
           </p>
           <p>
+            <strong>Ciudad:</strong> {hotel?.ciudad}
+          </p>
+          <p>
             <strong>Teléfono:</strong> {hotel?.telefono}
           </p>
         </div>
@@ -43,7 +46,7 @@ const RoomDetails: FC = () => {
               <strong>Costo Base:</strong> ${habitacion?.costoBase}
             </p>
             <p>
-              <strong>Impuesto:</strong> ${habitacion?.impuesto}
+              <strong>Impuesto:</strong> {habitacion?.impuesto}%
             </p>
           </div>
           <figure className="w-1/3 self-center">
