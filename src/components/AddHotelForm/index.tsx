@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 interface AddHotelFormData {
   nombre: string;
   direccion: string;
+  ciudad: string;
   telefono: string;
   habilitado: boolean;
 }
@@ -24,6 +25,7 @@ const AddHotelForm: FC = () => {
     defaultValues: {
       nombre: "",
       direccion: "",
+      ciudad: "",
       telefono: "",
       habilitado: false,
     },
@@ -87,6 +89,22 @@ const AddHotelForm: FC = () => {
         {errors.direccion && (
           <ErrorMessage>{errors.direccion.message}</ErrorMessage>
         )}
+
+        <input
+          type="text"
+          placeholder="Ciudad del hotel"
+          className={`border p-2 rounded ${
+            errors.ciudad && "border-primary border-2"
+          }`}
+          {...register("ciudad", {
+            required: "La ciudad es obligatoria",
+            minLength: {
+              value: 8,
+              message: "La ciudad debe tener al menos 8 caracteres",
+            },
+          })}
+        />
+        {errors.ciudad && <ErrorMessage>{errors.ciudad.message}</ErrorMessage>}
 
         <input
           type="text"
