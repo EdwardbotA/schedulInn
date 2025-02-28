@@ -46,7 +46,7 @@ const Search: FC = () => {
 
     if (formData.ciudad.trim() !== "") {
       allRooms = allRooms.filter((hotel) =>
-        hotel.direccion.toLowerCase().includes(formData.ciudad.toLowerCase())
+        hotel.ciudad.toLowerCase().includes(formData.ciudad.toLowerCase())
       );
     }
 
