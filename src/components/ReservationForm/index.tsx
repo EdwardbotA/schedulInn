@@ -206,6 +206,11 @@ const ReservationForm: FC<ReservationFromProps> = ({ cantidad }) => {
                   {...register(`huespedes.${index}.fechaNacimiento` as const, {
                     required:
                       "El fecha de nacimiento del huesped es obligatorio",
+                    max: {
+                      value: new Date().toISOString().split("T")[0],
+                      message:
+                        "La fecha de nacimiento no puede ser mayor a hoy",
+                    },
                   })}
                 />
               </label>
