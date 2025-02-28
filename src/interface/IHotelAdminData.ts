@@ -5,6 +5,7 @@ interface IHotelAdminData {
   adminId: string;
   nombre: string;
   direccion: string;
+  ciudad: string;
   telefono: string;
   habilitado: boolean;
   habitaciones: IRoomData[];

@@ -42,7 +42,9 @@ const AdminHotelList: FC = () => {
             >
               <div>
                 <h2 className="text-lg font-bold">{hotel.nombre}</h2>
-                <p className="text-sm text-gray-600">{hotel.direccion}</p>
+                <p className="text-sm text-gray-600">
+                  {hotel.direccion}, {hotel.ciudad}
+                </p>
                 <p className="text-sm text-gray-600">Tel: {hotel.telefono}</p>
                 <p
                   className={
