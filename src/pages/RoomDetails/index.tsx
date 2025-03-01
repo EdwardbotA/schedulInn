@@ -58,7 +58,11 @@ const RoomDetails: FC = () => {
           </figure>
         </div>
       </div>
-      <ReservationForm cantidad={habitacion?.capacidad} />
+      <ReservationForm
+        cantidad={habitacion?.capacidad}
+        costoBase={habitacion?.costoBase}
+        impuesto={habitacion?.impuesto}
+      />
     </section>
   );
 };

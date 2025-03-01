@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import Button from "../Button";
 import ErrorMessage from "../ErrorMessage";
@@ -11,6 +11,8 @@ import {
 } from "../../services/BooksAPI/BooksAPI";
 import { useNavigate, useParams } from "react-router";
 import IReservationData from "../../interface/IReservationData";
+import { getTotalNights } from "../../utils/getTotalNights";
+import { getTotalPrice } from "../../utils/getTotalPrice";
 
 interface ReservationFormData {
   fechaEntrada: string;
@@ -22,9 +24,15 @@ interface ReservationFormData {
 
 interface ReservationFromProps {
   cantidad: number | undefined;
+  costoBase: number | undefined;
+  impuesto: number | undefined;
 }
 
-const ReservationForm: FC<ReservationFromProps> = ({ cantidad }) => {
+const ReservationForm: FC<ReservationFromProps> = ({
+  cantidad,
+  costoBase,
+  impuesto,
+}) => {
   const { user, setReservations, reservations } = useAuth();
   const { hotelId, habitacionId } = useParams();
   const {
@@ -57,6 +65,22 @@ const ReservationForm: FC<ReservationFromProps> = ({ cantidad }) => {
     },
   });
   const navigate = useNavigate();
+
+  const [total, setTotal] = useState(0);
+
+  const fechaEntrada = watch("fechaEntrada");
+  const fechaSalida = watch("fechaSalida");
+
+  useEffect(() => {
+    if (fechaEntrada && fechaSalida && costoBase && impuesto !== undefined) {
+      const diferencia = getTotalNights(fechaEntrada, fechaSalida);
+      const total = getTotalPrice(diferencia, costoBase, impuesto);
+
+      setTotal(total);
+    } else {
+      setTotal(0);
+    }
+  }, [fechaEntrada, fechaSalida, costoBase, impuesto]);
 
   const { fields, append, remove } = useFieldArray({
     control,
