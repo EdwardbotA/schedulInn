@@ -10,6 +10,7 @@ import {
   fetchBooksGuest,
 } from "../../services/BooksAPI/BooksAPI";
 import { useNavigate, useParams } from "react-router";
+import IReservationData from "../../interface/IReservationData";
 
 interface ReservationFormData {
   fechaEntrada: string;
@@ -24,12 +25,16 @@ interface ReservationFromProps {
 }
 
 const ReservationForm: FC<ReservationFromProps> = ({ cantidad }) => {
-  const { user, setReservations } = useAuth();
+  const { user, setReservations, reservations } = useAuth();
   const { hotelId, habitacionId } = useParams();
   const {
     register,
     handleSubmit,
     control,
+    setError,
+    clearErrors,
+    watch,
+    setFocus,
     formState: { errors },
   } = useForm<ReservationFormData>({
     mode: "all",
@@ -58,29 +63,101 @@ const ReservationForm: FC<ReservationFromProps> = ({ cantidad }) => {
     name: "huespedes",
   });
 
+  const isAvailable = ({
+    fechaEntrada,
+    fechaSalida,
+    hotelId,
+    habitacionId,
+  }: Pick<
+    IReservationData,
+    "fechaEntrada" | "fechaSalida" | "habitacionId" | "hotelId"
+  >) => {
+    if (!reservations) return { errorInicio: false, errorFinal: false };
+
+    let errorInicio = false;
+    let errorFinal = false;
+
+    const fechaEntradaDate = new Date(fechaEntrada);
+    const fechaSalidaDate = new Date(fechaSalida);
+
+    reservations.forEach((reserva) => {
+      const reservaFechaEntrada = new Date(reserva.fechaEntrada);
+      const reservaFechaSalida = new Date(reserva.fechaSalida);
+
+      if (
+        reserva.hotelId === hotelId &&
+        reserva.habitacionId === habitacionId
+      ) {
+        if (
+          fechaEntradaDate >= reservaFechaEntrada &&
+          fechaEntradaDate <= reservaFechaSalida
+        ) {
+          errorInicio = true;
+        }
+
+        if (
+          fechaSalidaDate >= reservaFechaEntrada &&
+          fechaSalidaDate <= reservaFechaSalida
+        ) {
+          errorFinal = true;
+        }
+
+        if (
+          fechaEntradaDate <= reservaFechaEntrada &&
+          fechaSalidaDate >= reservaFechaSalida
+        ) {
+          errorInicio = true;
+          errorFinal = true;
+        }
+      }
+    });
+
+    return { errorInicio, errorFinal };
+  };
+
   const onSubmited = async (formData: ReservationFormData) => {
     try {
-      if (hotelId && habitacionId && user) {
-        const sendData = {
-          usuarioId: user.id,
-          hotelId: hotelId,
-          habitacionId: habitacionId,
-          fechaEntrada: formData.fechaEntrada,
-          fechaSalida: formData.fechaSalida,
-          huespedes: formData.huespedes,
-          contactoEmergencia: {
-            nombre: formData.contactoEmergenciaNombre,
-            telefono: formData.contactoEmergenciaTelefono,
-          },
-        };
+      if (!hotelId || !habitacionId || !user) return;
 
-        await addReservation(sendData, user);
+      const sendData = {
+        usuarioId: user.id,
+        hotelId: hotelId,
+        habitacionId: habitacionId,
+        fechaEntrada: formData.fechaEntrada,
+        fechaSalida: formData.fechaSalida,
+        huespedes: formData.huespedes,
+        contactoEmergencia: {
+          nombre: formData.contactoEmergenciaNombre,
+          telefono: formData.contactoEmergenciaTelefono,
+        },
+      };
 
-        const updatedBooks = await fetchBooksGuest(user.id);
-        setReservations(updatedBooks);
+      const { errorInicio, errorFinal } = isAvailable({
+        fechaEntrada: formData.fechaEntrada,
+        fechaSalida: formData.fechaSalida,
+        hotelId,
+        habitacionId,
+      });
 
-        navigate("/dashboard/reservas");
+      clearErrors(["fechaEntrada", "fechaSalida"]);
+
+      if (errorInicio || errorFinal) {
+        setError(errorInicio ? "fechaEntrada" : "fechaSalida", {
+          type: "manual",
+          message: "La habitación esta ocupada en esa fecha",
+        });
+
+        setFocus(errorInicio ? "fechaEntrada" : "fechaSalida");
+
+        return;
       }
+
+      await addReservation(sendData, user);
+
+      const updatedBooks = await fetchBooksGuest(user.id);
+      setReservations(updatedBooks);
+
+      navigate("/dashboard/reservas");
     } catch (error) {
       console.error("Error en el registro", error);
     }
@@ -104,6 +181,10 @@ const ReservationForm: FC<ReservationFromProps> = ({ cantidad }) => {
             }`}
             {...register("fechaEntrada", {
               required: "La fecha de entrada es obligatorio",
+              min: {
+                value: new Date().toISOString().split("T")[0],
+                message: "La fecha de entrada no puede ser menor a hoy",
+              },
             })}
           />
         </label>
@@ -121,6 +202,18 @@ const ReservationForm: FC<ReservationFromProps> = ({ cantidad }) => {
             }`}
             {...register("fechaSalida", {
               required: "La fecha de salida es obligatorio",
+              validate: (val) => {
+                const fechaEntrada = new Date(watch("fechaEntrada"));
+                const fechaSalida = new Date(val);
+
+                const siguienteDia = new Date(fechaEntrada);
+                siguienteDia.setDate(siguienteDia.getDate() + 1);
+
+                return (
+                  fechaSalida >= siguienteDia ||
+                  "La fecha de salida debe ser al menos un dia despues de la fecha de entrada"
+                );
+              },
             })}
           />
         </label>
