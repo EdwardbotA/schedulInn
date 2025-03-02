@@ -9,6 +9,9 @@ interface IEmailData {
   from_name: string;
   nombre: string;
   hotel: string;
+  totalNoches: number;
+  tipo: string;
+  costeTotal: string;
   fechaEntrada: string;
   fechaSalida: string;
   [key: string]: unknown;
