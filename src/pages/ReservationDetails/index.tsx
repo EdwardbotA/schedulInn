@@ -5,6 +5,7 @@ import IHotelAdminData from "../../interface/IHotelAdminData";
 import { fetchHotelesAdmin } from "../../services/hotelAPI/hotelsAdminAPI";
 import { useQuery } from "@tanstack/react-query";
 import Button from "../../components/Button";
+import { formatPrice } from "../../utils/formatPrice";
 
 const ReservationDetails: FC = () => {
   const { reservationId } = useParams();
@@ -96,6 +97,16 @@ const ReservationDetails: FC = () => {
       <p className="text-gray-600">
         Fecha de Salida:{" "}
         <span className="font-medium">{reservation?.fechaSalida}</span>
+      </p>
+      <p className="text-gray-600">
+        Total de noches de estadia:{" "}
+        <span className="font-medium">{reservation?.totalNoches} Noches</span>
+      </p>
+      <p className="text-gray-600">
+        Coste total con impuestos:{" "}
+        <span className="font-medium">
+          {formatPrice(reservation?.costeTotal)} COP
+        </span>
       </p>
 
       <h3 className="text-xl font-semibold text-gray-800 mt-4">Huéspedes</h3>

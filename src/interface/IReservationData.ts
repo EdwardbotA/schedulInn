@@ -7,6 +7,8 @@ interface IReservationData {
   habitacionId: string;
   fechaEntrada: string;
   fechaSalida: string;
+  totalNoches: number;
+  costeTotal: number;
   huespedes: IGuestData[];
   contactoEmergencia: IEmergenciaData;
 }

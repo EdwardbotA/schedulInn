@@ -150,6 +150,11 @@ const ReservationForm: FC<ReservationFromProps> = ({
         habitacionId: habitacionId,
         fechaEntrada: formData.fechaEntrada,
         fechaSalida: formData.fechaSalida,
+        totalNoches: getTotalNights(
+          formData.fechaEntrada,
+          formData.fechaSalida
+        ),
+        costeTotal: total,
         huespedes: formData.huespedes,
         contactoEmergencia: {
           nombre: formData.contactoEmergenciaNombre,
