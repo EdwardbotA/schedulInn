@@ -68,6 +68,7 @@ const ReservationForm: FC<ReservationFromProps> = ({
   const navigate = useNavigate();
 
   const [total, setTotal] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fechaEntrada = watch("fechaEntrada");
   const fechaSalida = watch("fechaSalida");
@@ -142,6 +143,8 @@ const ReservationForm: FC<ReservationFromProps> = ({
 
   const onSubmited = async (formData: ReservationFormData) => {
     try {
+      setIsSubmitting(true);
+
       if (!hotelId || !habitacionId || !user) return;
 
       const sendData = {
@@ -179,6 +182,8 @@ const ReservationForm: FC<ReservationFromProps> = ({
 
         setFocus(errorInicio ? "fechaEntrada" : "fechaSalida");
 
+        setIsSubmitting(false);
+
         return;
       }
 
@@ -190,6 +195,8 @@ const ReservationForm: FC<ReservationFromProps> = ({
       navigate("/dashboard/reservas");
     } catch (error) {
       console.error("Error en el registro", error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -497,7 +504,9 @@ const ReservationForm: FC<ReservationFromProps> = ({
             )}
           </div>
 
-          <Button>Reservar habitación</Button>
+          <Button isDisabled={isSubmitting}>
+            {isSubmitting ? "Enviando..." : "Reservar habitación"}
+          </Button>
         </form>
       </div>
     </>
