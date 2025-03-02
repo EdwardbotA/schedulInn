@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useParams } from "react-router";
 import { useAuth } from "../../context/context";
 import ReservationForm from "../../components/ReservationForm";
+import { formatPrice } from "../../utils/formatPrice";
 
 const RoomDetails: FC = () => {
   const { hotelId, habitacionId } = useParams();
@@ -43,7 +44,7 @@ const RoomDetails: FC = () => {
               <strong>Ubicación:</strong> {habitacion?.ubicacion}
             </p>
             <p>
-              <strong>Costo Base:</strong> ${habitacion?.costoBase}
+              <strong>Costo Base:</strong> {formatPrice(habitacion?.costoBase)}
             </p>
             <p>
               <strong>Impuesto:</strong> {habitacion?.impuesto}%

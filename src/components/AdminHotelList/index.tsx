@@ -5,6 +5,7 @@ import { fetchHotelesAdmin } from "../../services/hotelAPI/hotelsAdminAPI";
 import IHotelAdminData from "../../interface/IHotelAdminData";
 import Button from "../Button";
 import { Link } from "react-router";
+import { formatPrice } from "../../utils/formatPrice";
 
 const AdminHotelList: FC = () => {
   const { user } = useAuth();
@@ -79,7 +80,8 @@ const AdminHotelList: FC = () => {
                         {habitacion.capacidad} personas
                       </p>
                       <p>
-                        <strong>Costo Base:</strong> ${habitacion.costoBase}
+                        <strong>Costo Base:</strong>{" "}
+                        {formatPrice(habitacion.costoBase)}
                       </p>
                       <p>
                         <strong>Impuestos:</strong> {habitacion.impuesto}%
